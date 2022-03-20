@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v1/greetings")
-class GreetingController {
+class GreetingsController {
 
     @GetMapping("/{name}")
     fun greet(@PathVariable name: String): String {

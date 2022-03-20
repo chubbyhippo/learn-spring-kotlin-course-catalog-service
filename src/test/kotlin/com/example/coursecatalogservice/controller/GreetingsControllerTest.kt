@@ -6,7 +6,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.reactive.server.WebTestClient
 
 @WebMvcTest
-internal class GreetingControllerTest {
+internal class GreetingsControllerTest {
 
     @Autowired
     private lateinit var webTestClient: WebTestClient
