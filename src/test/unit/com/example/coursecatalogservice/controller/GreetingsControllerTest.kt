@@ -18,16 +18,17 @@ internal class GreetingsControllerTest {
     @MockBean
     private lateinit var greetingsService: GreetingsService
 
-    private val name = "Hippo"
 
     @BeforeEach
     fun setup() {
-        `when`(greetingsService.greet(name))
+        `when`(greetingsService.greet(anyString()))
             .thenReturn("Hello Hippo")
     }
 
     @Test
     fun shouldReturnHello() {
+
+        val name = "Hippo"
 
         webTestClient.get()
             .uri("/v1/greetings/{name}", name)
