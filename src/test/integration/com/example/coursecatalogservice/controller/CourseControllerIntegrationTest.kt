@@ -30,8 +30,8 @@ class CourseControllerIntegrationTest {
             .returnResult()
             .responseBody
 
-        Assertions.assertTrue{
-            returnResult!!.id !=null
+        Assertions.assertTrue {
+            returnResult!!.id != null
         }
     }
 }
