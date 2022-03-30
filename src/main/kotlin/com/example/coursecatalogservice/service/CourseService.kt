@@ -16,7 +16,7 @@ class CourseService(val courseRepository: CourseRepository) {
 
     fun addCourse(courseDto: CourseDto): CourseDto {
         val courseEntity = courseDto.let {
-           Course(null, it.name, it.category)
+            Course(null, it.name, it.category)
         }
 
         courseRepository.save(courseEntity)
@@ -24,5 +24,12 @@ class CourseService(val courseRepository: CourseRepository) {
         courseEntity.let {
             return CourseDto(it.id, it.name, it.category)
         }
+    }
+
+    fun retrieveAllCourses(): List<CourseDto> {
+        return courseRepository.findAll()
+            .map {
+                CourseDto(it.id, it.name, it.category)
+            }
     }
 }
