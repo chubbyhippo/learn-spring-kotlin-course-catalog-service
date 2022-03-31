@@ -5,8 +5,8 @@ import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.repository.CourseRepository
 import com.example.coursecatalogservice.service.CourseService
 import com.example.coursecatalogservice.util.courseEntityList
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,6 +25,7 @@ class CourseControllerIntegrationTest {
 
     @Autowired
     private lateinit var webTestClient: WebTestClient
+
     @Autowired
     private lateinit var courseRepository: CourseRepository
 
@@ -64,5 +65,29 @@ class CourseControllerIntegrationTest {
             .responseBody
 
         assertEquals(3, responseBody?.size)
+    }
+
+    @Test
+    fun shouldUpdateCourse() {
+
+        val course = courseRepository.findAll()[0]
+        val updatedCourseDto = CourseDto(
+            null,
+            "Hello Hippo",
+            "General"
+        )
+
+        val responseBody = webTestClient.put()
+            .uri("/v1/courses/{courseId}", course.id)
+            .bodyValue(updatedCourseDto)
+            .exchange()
+            .expectStatus().isOk
+            .expectBody(CourseDto::class.java)
+            .returnResult()
+            .responseBody
+
+        assertEquals("Hello Hippo", responseBody!!.name)
+        assertEquals("General", responseBody.category)
+
     }
 }
