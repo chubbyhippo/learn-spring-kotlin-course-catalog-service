@@ -2,6 +2,7 @@ package com.example.coursecatalogservice.service
 
 import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.entity.Course
+import com.example.coursecatalogservice.exception.CourseNotFoundException
 import com.example.coursecatalogservice.repository.CourseRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -31,5 +32,20 @@ class CourseService(val courseRepository: CourseRepository) {
             .map {
                 CourseDto(it.id, it.name, it.category)
             }
+    }
+
+    fun updateCourse(courseId: Int, courseDto: CourseDto): CourseDto {
+        val existingCourse = courseRepository.findById(courseId)
+        return if (existingCourse.isPresent) {
+            existingCourse.get()
+                .let {
+                    it.name = courseDto.name
+                    it.category = courseDto.category
+                    courseRepository.save(it)
+                    CourseDto(it.id, it.name, it.category)
+                }
+        } else {
+            throw CourseNotFoundException("No course found for the passed in Id : $courseId")
+        }
     }
 }
