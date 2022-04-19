@@ -16,8 +16,8 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest(
-    classes = [CourseCatalogServiceApplication::class, CourseController::class, CourseService::class],
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+        classes = [CourseCatalogServiceApplication::class, CourseController::class, CourseService::class],
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 @ActiveProfiles("test")
 @AutoConfigureWebClient
@@ -41,13 +41,13 @@ class CourseControllerIntegrationTest {
         val courseDto = CourseDto(null, "Hippo study", "Hippo")
 
         val responseBody = webTestClient.post()
-            .uri("/v1/courses")
-            .bodyValue(courseDto)
-            .exchange()
-            .expectStatus().isCreated
-            .expectBody(CourseDto::class.java)
-            .returnResult()
-            .responseBody
+                .uri("/v1/courses")
+                .bodyValue(courseDto)
+                .exchange()
+                .expectStatus().isCreated
+                .expectBody(CourseDto::class.java)
+                .returnResult()
+                .responseBody
 
         assertTrue {
             responseBody!!.id != null
@@ -57,12 +57,12 @@ class CourseControllerIntegrationTest {
     @Test
     fun shouldRetrieveAllCourses() {
         val responseBody = webTestClient.get()
-            .uri("/v1/courses")
-            .exchange()
-            .expectStatus().isOk
-            .expectBodyList(CourseDto::class.java)
-            .returnResult()
-            .responseBody
+                .uri("/v1/courses")
+                .exchange()
+                .expectStatus().isOk
+                .expectBodyList(CourseDto::class.java)
+                .returnResult()
+                .responseBody
 
         assertEquals(3, responseBody?.size)
     }
@@ -72,22 +72,37 @@ class CourseControllerIntegrationTest {
 
         val course = courseRepository.findAll()[0]
         val updatedCourseDto = CourseDto(
-            null,
-            "Hello Hippo",
-            "General"
+                null,
+                "Hello Hippo",
+                "General"
         )
 
         val responseBody = webTestClient.put()
-            .uri("/v1/courses/{courseId}", course.id)
-            .bodyValue(updatedCourseDto)
-            .exchange()
-            .expectStatus().isOk
-            .expectBody(CourseDto::class.java)
-            .returnResult()
-            .responseBody
+                .uri("/v1/courses/{courseId}", course.id)
+                .bodyValue(updatedCourseDto)
+                .exchange()
+                .expectStatus().isOk
+                .expectBody(CourseDto::class.java)
+                .returnResult()
+                .responseBody
 
         assertEquals("Hello Hippo", responseBody!!.name)
         assertEquals("General", responseBody.category)
 
     }
+
+    @Test
+    fun shouldDeleteCourse() {
+        val course = courseRepository.findAll()[0]
+        val courseSizeBeforeDeletion = courseRepository.findAll().size
+
+        webTestClient.delete()
+                .uri("/v1/courses/{courseId}", course.id)
+                .exchange()
+                .expectStatus().isNoContent
+
+        val courseSizeAfterDeletion = courseRepository.findAll().size
+        assertEquals(1, courseSizeBeforeDeletion - courseSizeAfterDeletion)
+    }
+
 }
