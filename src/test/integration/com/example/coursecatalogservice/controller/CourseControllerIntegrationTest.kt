@@ -40,7 +40,8 @@ class CourseControllerIntegrationTest {
     fun shouldAddCourse() {
         val courseDto = CourseDto(null, "Hippo study", "Hippo")
 
-        val responseBody = webTestClient.post()
+        val savedCourseDto = webTestClient
+            .post()
                 .uri("/v1/courses")
                 .bodyValue(courseDto)
                 .exchange()
@@ -50,7 +51,7 @@ class CourseControllerIntegrationTest {
                 .responseBody
 
         assertTrue {
-            responseBody!!.id != null
+            savedCourseDto!!.id != null
         }
     }
 
