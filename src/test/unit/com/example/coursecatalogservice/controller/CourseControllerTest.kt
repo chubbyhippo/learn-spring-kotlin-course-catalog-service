@@ -5,8 +5,8 @@ import com.example.coursecatalogservice.service.CourseService
 import com.example.coursecatalogservice.util.courseDto
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.anyInt
-import org.mockito.Mockito.`when`
+import org.mockito.Mockito
+import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -97,10 +97,8 @@ internal class CourseControllerTest {
     @Test
     fun shouldDeleteCourse() {
 
-       val courseId = 1
-
-        `when`(courseService.deleteCourse(courseId))
-
+        val courseId = 1
+        doNothing().`when`(courseService).deleteCourse(courseId)
         webTestClient.delete()
             .uri("/v1/courses/{courseId}", courseId)
             .exchange()
