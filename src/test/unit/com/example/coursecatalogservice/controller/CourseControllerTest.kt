@@ -5,6 +5,7 @@ import com.example.coursecatalogservice.service.CourseService
 import com.example.coursecatalogservice.util.courseDto
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.anyInt
 import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -93,11 +94,19 @@ internal class CourseControllerTest {
         Assertions.assertEquals("General", updateCourseDto.category)
     }
 
-    @Test
-    fun deleteCourse() {
-    }
+//    @Test
+//    fun shouldDeleteCourse() {
+//        `when`(courseService.deleteCourse(anyInt()))
+//        val course = courseRepository.findAll()[0]
+//        val courseSizeBeforeDeletion = courseRepository.findAll().size
+//
+//        webTestClient.delete()
+//            .uri("/v1/courses/{courseId}", course.id)
+//            .exchange()
+//            .expectStatus().isNoContent
+//
+//        val courseSizeAfterDeletion = courseRepository.findAll().size
+//        Assertions.assertEquals(1, courseSizeBeforeDeletion - courseSizeAfterDeletion)
+//    }
 
-    @Test
-    fun getCourseService() {
-    }
 }
