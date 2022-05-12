@@ -78,7 +78,7 @@ class CourseControllerIntegrationTest {
                 "General"
         )
 
-        val responseBody = webTestClient.put()
+        val updateCourseDto = webTestClient.put()
                 .uri("/v1/courses/{courseId}", course.id)
                 .bodyValue(updatedCourseDto)
                 .exchange()
@@ -87,8 +87,8 @@ class CourseControllerIntegrationTest {
                 .returnResult()
                 .responseBody
 
-        assertEquals("Hello Hippo", responseBody!!.name)
-        assertEquals("General", responseBody.category)
+        assertEquals("Hello Hippo", updateCourseDto!!.name)
+        assertEquals("General", updateCourseDto.category)
 
     }
 
