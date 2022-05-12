@@ -64,7 +64,33 @@ internal class CourseControllerTest {
     }
 
     @Test
-    fun updateCourse() {
+    fun shouldUpdateCourse() {
+
+        val updatedCourseDto = CourseDto(
+            null,
+            "Hello Hippo",
+            "General"
+        )
+        `when`(courseService.updateCourse(100, updatedCourseDto))
+            .thenReturn(
+                courseDto(
+                    id = 100,
+                    name = updatedCourseDto.name,
+                    category = updatedCourseDto.category
+                )
+            )
+
+        val updateCourseDto = webTestClient.put()
+            .uri("/v1/courses/{courseId}", 100)
+            .bodyValue(updatedCourseDto)
+            .exchange()
+            .expectStatus().isOk
+            .expectBody(CourseDto::class.java)
+            .returnResult()
+            .responseBody
+
+        Assertions.assertEquals("Hello Hippo", updateCourseDto!!.name)
+        Assertions.assertEquals("General", updateCourseDto.category)
     }
 
     @Test
