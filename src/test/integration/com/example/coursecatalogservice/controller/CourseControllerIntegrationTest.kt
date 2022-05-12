@@ -57,7 +57,7 @@ class CourseControllerIntegrationTest {
 
     @Test
     fun shouldRetrieveAllCourses() {
-        val responseBody = webTestClient.get()
+        val courseDtos = webTestClient.get()
                 .uri("/v1/courses")
                 .exchange()
                 .expectStatus().isOk
@@ -65,7 +65,7 @@ class CourseControllerIntegrationTest {
                 .returnResult()
                 .responseBody
 
-        assertEquals(3, responseBody?.size)
+        assertEquals(3, courseDtos?.size)
     }
 
     @Test
