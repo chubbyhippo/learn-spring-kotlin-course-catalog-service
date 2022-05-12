@@ -94,19 +94,18 @@ internal class CourseControllerTest {
         Assertions.assertEquals("General", updateCourseDto.category)
     }
 
-//    @Test
-//    fun shouldDeleteCourse() {
-//        `when`(courseService.deleteCourse(anyInt()))
-//        val course = courseRepository.findAll()[0]
-//        val courseSizeBeforeDeletion = courseRepository.findAll().size
-//
-//        webTestClient.delete()
-//            .uri("/v1/courses/{courseId}", course.id)
-//            .exchange()
-//            .expectStatus().isNoContent
-//
-//        val courseSizeAfterDeletion = courseRepository.findAll().size
-//        Assertions.assertEquals(1, courseSizeBeforeDeletion - courseSizeAfterDeletion)
-//    }
+    @Test
+    fun shouldDeleteCourse() {
+
+       val courseId = 1
+
+        `when`(courseService.deleteCourse(courseId))
+
+        webTestClient.delete()
+            .uri("/v1/courses/{courseId}", courseId)
+            .exchange()
+            .expectStatus().isNoContent
+
+    }
 
 }
