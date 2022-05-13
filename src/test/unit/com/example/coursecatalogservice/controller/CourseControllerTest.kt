@@ -42,6 +42,19 @@ internal class CourseControllerTest {
     }
 
     @Test
+    fun shouldAddCourseContainsValidation() {
+        val courseDto = CourseDto(null, "", "")
+        `when`(courseService.addCourse(courseDto)).thenReturn(courseDto(id = 1))
+
+        webTestClient
+            .post()
+            .uri("/v1/courses")
+            .bodyValue(courseDto)
+            .exchange()
+            .expectStatus().isBadRequest
+
+    }
+    @Test
     fun retrieveAllCourses() {
         `when`(courseService.retrieveAllCourses())
             .thenReturn(
