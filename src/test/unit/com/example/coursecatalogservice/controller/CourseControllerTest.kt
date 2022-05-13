@@ -46,14 +46,22 @@ internal class CourseControllerTest {
         val courseDto = CourseDto(null, "", "")
         `when`(courseService.addCourse(courseDto)).thenReturn(courseDto(id = 1))
 
-        webTestClient
+        val responseBody = webTestClient
             .post()
             .uri("/v1/courses")
             .bodyValue(courseDto)
             .exchange()
             .expectStatus().isBadRequest
+            .expectBody(String::class.java)
+            .returnResult()
+            .responseBody
+        Assertions.assertEquals(
+            "courseDto.category must not be blank\",\"courseDto.name must not be blank",
+            responseBody
+        )
 
     }
+
     @Test
     fun retrieveAllCourses() {
         `when`(courseService.retrieveAllCourses())
