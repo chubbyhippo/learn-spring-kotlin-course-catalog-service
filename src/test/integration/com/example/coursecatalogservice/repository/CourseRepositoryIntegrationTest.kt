@@ -25,4 +25,10 @@ class CourseRepositoryIntegrationTest {
         val courses = courseRepository.findByNameContaining("Hippo")
         Assertions.assertEquals(3, courses.size)
     }
+
+    @Test
+    fun shouldFindByName() {
+        val courses = courseRepository.findCourseByName("Hippo love theory")
+        Assertions.assertEquals(1, courses.size)
+    }
 }
