@@ -56,7 +56,7 @@ internal class CourseControllerTest {
             .returnResult()
             .responseBody
         Assertions.assertEquals(
-            "courseDto.category must not be blank\",\"courseDto.name must not be blank",
+            "courseDto.category must not be blank, courseDto.name must not be blank",
             responseBody
         )
 
