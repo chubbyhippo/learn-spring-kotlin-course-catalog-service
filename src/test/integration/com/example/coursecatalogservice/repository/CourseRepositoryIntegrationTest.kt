@@ -4,8 +4,12 @@ import com.example.coursecatalogservice.util.courseEntityList
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import java.util.stream.Stream
 
 @DataJpaTest
 class CourseRepositoryIntegrationTest {
@@ -30,5 +34,22 @@ class CourseRepositoryIntegrationTest {
     fun shouldFindByName() {
         val courses = courseRepository.findCourseByName("Hippo love theory")
         Assertions.assertEquals(1, courses.size)
+    }
+
+    @ParameterizedTest
+    @MethodSource("courseAndSize")
+    fun shouldFindByNameApproach2(name: String, expectedSize: Int) {
+        val courses = courseRepository.findCourseByName(name)
+        Assertions.assertEquals(expectedSize, courses.size)
+    }
+
+    companion object {
+        @JvmStatic
+        fun courseAndSize(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.arguments("Hippo love theory", 1),
+                Arguments.arguments("Hippo for Java developers", 1)
+            )
+        }
     }
 }
