@@ -19,16 +19,21 @@ class CourseController(val courseService: CourseService) {
     }
 
     @GetMapping
-    fun retrieveAllCourses(): List<CourseDto> = courseService.retrieveAllCourses()
+    fun retrieveAllCourses(@RequestParam("courseName", required = false) courseName: String?): List<CourseDto> {
+        return courseName?.let {
+            courseService.retrieveCoursesByName(courseName)
+        } ?: courseService.retrieveAllCourses()
+    }
 
     @PutMapping("/{courseId}")
     fun updateCourse(
-            @RequestBody courseDto: CourseDto,
-            @PathVariable("courseId") courseId: Int
+        @RequestBody courseDto: CourseDto,
+        @PathVariable("courseId") courseId: Int
     ) = courseService.updateCourse(courseId, courseDto)
 
     @DeleteMapping("/{courseId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteCourse(@PathVariable("courseId") courseId: Int
+    fun deleteCourse(
+        @PathVariable("courseId") courseId: Int
     ) = courseService.deleteCourse(courseId)
 }
