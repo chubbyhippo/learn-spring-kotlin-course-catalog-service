@@ -127,4 +127,24 @@ internal class CourseControllerTest {
 
     }
 
+    @Test
+    fun shouldAddCourseRuntimeException() {
+        val courseDto = CourseDto(null, "Hippo kotlin development", "Hippo")
+        val errorMessage = "Unexpected Error Occurred"
+        `when`(courseService.addCourse(courseDto)).thenThrow(RuntimeException(errorMessage))
+
+        val responseBody = webTestClient
+            .post()
+            .uri("/v1/courses")
+            .bodyValue(courseDto)
+            .exchange()
+            .expectStatus().is5xxServerError
+            .expectBody(String::class.java)
+            .returnResult()
+            .responseBody
+
+        Assertions.assertEquals(errorMessage, responseBody)
+
+    }
+
 }
