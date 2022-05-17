@@ -3,6 +3,7 @@ package com.example.coursecatalogservice.service
 import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.entity.Course
 import com.example.coursecatalogservice.repository.CourseRepository
+import com.example.coursecatalogservice.util.courseEntityList
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -33,6 +34,17 @@ internal class CourseServiceTest {
 
         Assertions.assertNotNull(addedCourse.id)
 
+    }
+
+    @Test
+    fun shouldRetrieveAllCourses() {
+
+        Mockito.`when`(courseRepository.findAll())
+            .thenReturn(courseEntityList())
+
+        val courseDtos = courseService.retrieveAllCourses()
+
+        Assertions.assertEquals(3, courseDtos.size)
     }
 
 }
