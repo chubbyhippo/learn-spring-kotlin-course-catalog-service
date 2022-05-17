@@ -5,6 +5,7 @@ import com.example.coursecatalogservice.entity.Course
 import com.example.coursecatalogservice.repository.CourseRepository
 import com.example.coursecatalogservice.util.courseEntityList
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
@@ -33,7 +34,7 @@ internal class CourseServiceTest {
         val addedCourse = courseService.addCourse(courseDto)
         println(addedCourse)
 
-        Assertions.assertNotNull(addedCourse.id)
+        assertNotNull(addedCourse.id)
 
     }
 
@@ -45,7 +46,7 @@ internal class CourseServiceTest {
 
         val courseDtos = courseService.retrieveAllCourses()
 
-        Assertions.assertEquals(3, courseDtos.size)
+        assertEquals(3, courseDtos.size)
     }
 
     @Test
@@ -68,9 +69,9 @@ internal class CourseServiceTest {
 
         val (id, name, category) = courseService.updateCourse(1, courseDto)
 
-        Assertions.assertEquals(1, id)
-        Assertions.assertEquals("Hello Hippo", name)
-        Assertions.assertEquals("General", category)
+        assertEquals(1, id)
+        assertEquals("Hello Hippo", name)
+        assertEquals("General", category)
 
     }
 
