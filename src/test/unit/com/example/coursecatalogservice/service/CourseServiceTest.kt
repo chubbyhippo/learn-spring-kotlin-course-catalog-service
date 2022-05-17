@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
 
 @ExtendWith(MockitoExtension::class)
@@ -26,7 +27,7 @@ internal class CourseServiceTest {
         val courseEntity = courseDto.let {
             Course(null, it.name, it.category)
         }
-        Mockito.`when`(courseRepository.save(courseEntity))
+        `when`(courseRepository.save(courseEntity))
             .thenReturn(Course(1, courseEntity.name, courseEntity.category))
 
         val addedCourse = courseService.addCourse(courseDto)
@@ -39,7 +40,7 @@ internal class CourseServiceTest {
     @Test
     fun shouldRetrieveAllCourses() {
 
-        Mockito.`when`(courseRepository.findAll())
+        `when`(courseRepository.findAll())
             .thenReturn(courseEntityList())
 
         val courseDtos = courseService.retrieveAllCourses()
