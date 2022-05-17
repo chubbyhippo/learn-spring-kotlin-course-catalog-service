@@ -27,7 +27,7 @@ internal class CourseServiceTest {
         val courseEntity = courseDto.let {
             Course(null, it.name, it.category)
         }
-        `when`(courseRepository.save(courseEntity))
+        `when`(courseRepository.save(any(Course::class.java)))
             .thenReturn(Course(1, courseEntity.name, courseEntity.category))
 
         val addedCourse = courseService.addCourse(courseDto)
@@ -47,5 +47,29 @@ internal class CourseServiceTest {
 
         Assertions.assertEquals(3, courseDtos.size)
     }
+
+//    @Test
+//    fun shouldUpdateCourse() {
+//
+//        Mockito.`when`(courseRepository.findById())
+//        val updatedCourseDto = CourseDto(
+//            null,
+//            "Hello Hippo",
+//            "General"
+//        )
+//
+//        val updateCourseDto = webTestClient.put()
+//            .uri("/v1/courses/{courseId}", course.id)
+//            .bodyValue(updatedCourseDto)
+//            .exchange()
+//            .expectStatus().isOk
+//            .expectBody(CourseDto::class.java)
+//            .returnResult()
+//            .responseBody
+//
+//        Assertions.assertEquals("Hello Hippo", updateCourseDto!!.name)
+//        Assertions.assertEquals("General", updateCourseDto.category)
+//
+//    }
 
 }
