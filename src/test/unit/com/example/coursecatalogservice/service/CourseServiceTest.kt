@@ -2,11 +2,13 @@ package com.example.coursecatalogservice.service
 
 import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.entity.Course
+import com.example.coursecatalogservice.exception.CourseNotFoundException
 import com.example.coursecatalogservice.repository.CourseRepository
 import com.example.coursecatalogservice.util.courseEntityList
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
@@ -72,6 +74,24 @@ internal class CourseServiceTest {
         assertEquals(1, id)
         assertEquals("Hello Hippo", name)
         assertEquals("General", category)
+
+    }
+
+    @Test
+    fun shouldUpdateCourseThrowException() {
+
+        val courseDto = CourseDto(
+            null,
+            "Hello Hippo",
+            "General"
+        )
+        val anyInt = anyInt()
+        `when`(courseRepository.findById(anyInt))
+            .thenReturn(Optional.ofNullable(null))
+
+        assertThrows<CourseNotFoundException>{
+            courseService.updateCourse(99, courseDto)
+        }
 
     }
 
