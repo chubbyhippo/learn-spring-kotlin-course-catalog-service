@@ -4,6 +4,7 @@ import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.service.CourseService
 import com.example.coursecatalogservice.util.courseDto
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.*
@@ -36,7 +37,7 @@ internal class CourseControllerTest {
             .returnResult()
             .responseBody
 
-        Assertions.assertTrue {
+        assertTrue {
             savedCourseDto!!.id != null
         }
     }
@@ -55,7 +56,7 @@ internal class CourseControllerTest {
             .expectBody(String::class.java)
             .returnResult()
             .responseBody
-        Assertions.assertEquals(
+        assertEquals(
             "courseDto.category must not be blank, courseDto.name must not be blank",
             responseBody
         )
@@ -82,7 +83,7 @@ internal class CourseControllerTest {
             .returnResult()
             .responseBody
 
-        Assertions.assertEquals(3, courseDtos?.size)
+        assertEquals(3, courseDtos?.size)
     }
 
     @Test
@@ -111,8 +112,8 @@ internal class CourseControllerTest {
             .returnResult()
             .responseBody
 
-        Assertions.assertEquals("Hello Hippo", updateCourseDto!!.name)
-        Assertions.assertEquals("General", updateCourseDto.category)
+        assertEquals("Hello Hippo", updateCourseDto!!.name)
+        assertEquals("General", updateCourseDto.category)
     }
 
     @Test
@@ -143,7 +144,7 @@ internal class CourseControllerTest {
             .returnResult()
             .responseBody
 
-        Assertions.assertEquals(errorMessage, responseBody)
+        assertEquals(errorMessage, responseBody)
 
     }
 
