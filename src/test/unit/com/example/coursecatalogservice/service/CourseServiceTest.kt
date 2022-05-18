@@ -12,6 +12,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
 import java.util.*
@@ -89,9 +90,23 @@ internal class CourseServiceTest {
         `when`(courseRepository.findById(anyInt))
             .thenReturn(Optional.ofNullable(null))
 
-        assertThrows<CourseNotFoundException>{
+        assertThrows<CourseNotFoundException> {
             courseService.updateCourse(99, courseDto)
         }
+
+    }
+
+    @Test
+    fun shouldDeleteCourse() {
+
+        val courseId = 1
+        val courseToDelete = Course(courseId, "", "")
+        `when`(courseRepository.findById(courseId)).thenReturn(Optional.of(courseToDelete))
+
+        doNothing().`when`(courseRepository).deleteById(courseId)
+
+        courseService.deleteCourse(courseId)
+        verify(courseRepository).deleteById(courseId)
 
     }
 
