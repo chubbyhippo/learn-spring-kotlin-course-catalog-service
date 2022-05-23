@@ -1,11 +1,10 @@
 package com.example.coursecatalogservice.controller
 
-import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.dto.InstructorDto
 import com.example.coursecatalogservice.service.InstructorService
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -23,7 +22,7 @@ class InstructorControllerTest {
     fun shouldAddInstructor() {
         val instructorDto = InstructorDto(null, "Hippo")
         val instructorDtoWithId = InstructorDto(1, "Hippo")
-        Mockito.`when`(instructorService.createInstructor(instructorDto)).thenReturn(instructorDtoWithId)
+        `when`(instructorService.createInstructor(instructorDto)).thenReturn(instructorDtoWithId)
 
         val savedInstructorDto = webTestClient
             .post()
