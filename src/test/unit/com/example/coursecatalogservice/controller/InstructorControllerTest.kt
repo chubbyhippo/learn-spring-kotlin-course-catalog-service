@@ -1,9 +1,7 @@
 package com.example.coursecatalogservice.controller
 
-import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.dto.InstructorDto
 import com.example.coursecatalogservice.service.InstructorService
-import com.example.coursecatalogservice.util.courseDto
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
