@@ -1,7 +1,9 @@
 package com.example.coursecatalogservice.controller
 
+import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.dto.InstructorDto
 import com.example.coursecatalogservice.service.InstructorService
+import com.example.coursecatalogservice.util.courseDto
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
@@ -37,5 +39,27 @@ class InstructorControllerTest {
         Assertions.assertTrue {
             savedInstructorDto!!.id != null
         }
+    }
+
+    @Test
+    fun shouldAddInstructorContainsValidation() {
+        val instructorDto = InstructorDto(null, "")
+        val instructorDtoWithId = InstructorDto(1, "")
+        `when`(instructorService.createInstructor(instructorDto)).thenReturn(instructorDtoWithId)
+
+        val responseBody = webTestClient
+            .post()
+            .uri("/v1/instructors")
+            .bodyValue(instructorDto)
+            .exchange()
+            .expectStatus().isBadRequest
+            .expectBody(String::class.java)
+            .returnResult()
+            .responseBody
+        Assertions.assertEquals(
+            "instructorDto.name must not be blank",
+            responseBody
+        )
+
     }
 }
