@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/v1/instructors")
@@ -17,7 +18,7 @@ class InstructorController(val instructorService: InstructorService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createInstructor(@RequestBody instructorDto: InstructorDto): InstructorDto {
+    fun createInstructor(@RequestBody @Valid instructorDto: InstructorDto): InstructorDto {
         return instructorService.createInstructor(instructorDto)
     }
 }
