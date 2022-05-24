@@ -2,8 +2,10 @@ package com.example.coursecatalogservice.service
 
 import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.entity.Course
+import com.example.coursecatalogservice.entity.Instructor
 import com.example.coursecatalogservice.exception.CourseNotFoundException
 import com.example.coursecatalogservice.repository.CourseRepository
+import com.example.coursecatalogservice.repository.InstructorRepository
 import com.example.coursecatalogservice.util.courseEntityList
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -21,18 +23,23 @@ import java.util.*
 internal class CourseServiceTest {
     @Mock
     lateinit var courseRepository: CourseRepository
+    @Mock
+    lateinit var instructorRepository: InstructorRepository
 
     @InjectMocks
     lateinit var courseService: CourseService
 
     @Test
     fun shouldAddCourse() {
-        val courseDto = CourseDto(null, "Hippo kotlin development", "Hippo")
+        val instructorEntity = Instructor(1, "Hippo")
+        val courseDto = CourseDto(null, "Hippo kotlin development", "Hippo", 1)
         val courseEntity = courseDto.let {
-            Course(null, it.name, it.category)
+            Course(null, it.name, it.category, instructorEntity)
         }
+        `when`(instructorRepository.findById(anyInt()))
+            .thenReturn(Optional.of(Instructor(1, "Hippo")))
         `when`(courseRepository.save(any(Course::class.java)))
-            .thenReturn(Course(1, courseEntity.name, courseEntity.category))
+            .thenReturn(Course(1, courseEntity.name, courseEntity.category, instructorEntity))
 
         val addedCourse = courseService.addCourse(courseDto)
         println(addedCourse)
@@ -43,6 +50,7 @@ internal class CourseServiceTest {
 
     @Test
     fun shouldRetrieveAllCourses() {
+
 
         `when`(courseRepository.findAll())
             .thenReturn(courseEntityList())
