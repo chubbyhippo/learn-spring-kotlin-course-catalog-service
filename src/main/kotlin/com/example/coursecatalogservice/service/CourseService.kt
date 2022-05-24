@@ -42,7 +42,7 @@ class CourseService(
     fun retrieveAllCourses(): List<CourseDto> {
         return courseRepository.findAll()
             .map {
-                CourseDto(it.id, it.name, it.category)
+                CourseDto(it.id, it.name, it.category, it.instructor?.id)
             }
     }
 
