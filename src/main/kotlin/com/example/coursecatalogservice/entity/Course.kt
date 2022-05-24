@@ -11,7 +11,7 @@ data class Course(
     var name: String,
     var category: String,
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "instructor_id", nullable = false)
+    @JoinColumn(name = "instructor_id", nullable = true)
     val instructor: Instructor? = null
 ) {
     override fun toString(): String {
