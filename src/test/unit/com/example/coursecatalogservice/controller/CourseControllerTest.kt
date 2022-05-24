@@ -24,8 +24,8 @@ internal class CourseControllerTest {
 
     @Test
     fun shouldAddCourse() {
-        val courseDto = CourseDto(null, "Hippo kotlin development", "Hippo")
-        `when`(courseService.addCourse(courseDto)).thenReturn(courseDto(id = 1))
+        val courseDto = CourseDto(null, "Hippo kotlin development", "Hippo", 1)
+        `when`(courseService.addCourse(courseDto)).thenReturn(courseDto(id = 1, instructorId = 1))
 
         val savedCourseDto = webTestClient
             .post()
@@ -44,7 +44,7 @@ internal class CourseControllerTest {
 
     @Test
     fun shouldAddCourseContainsValidation() {
-        val courseDto = CourseDto(null, "", "")
+        val courseDto = CourseDto(null, "", "", null)
         `when`(courseService.addCourse(courseDto)).thenReturn(courseDto(id = 1))
 
         val responseBody = webTestClient
@@ -57,7 +57,8 @@ internal class CourseControllerTest {
             .returnResult()
             .responseBody
         assertEquals(
-            "courseDto.category must not be blank, courseDto.name must not be blank",
+            "courseDto.category must not be blank," +
+                    " courseDto.instructorId must not be null, courseDto.name must not be blank",
             responseBody
         )
 
@@ -130,7 +131,7 @@ internal class CourseControllerTest {
 
     @Test
     fun shouldAddCourseRuntimeException() {
-        val courseDto = CourseDto(null, "Hippo kotlin development", "Hippo")
+        val courseDto = CourseDto(null, "Hippo kotlin development", "Hippo", 1)
         val errorMessage = "Unexpected Error Occurred"
         `when`(courseService.addCourse(courseDto)).thenThrow(RuntimeException(errorMessage))
 
