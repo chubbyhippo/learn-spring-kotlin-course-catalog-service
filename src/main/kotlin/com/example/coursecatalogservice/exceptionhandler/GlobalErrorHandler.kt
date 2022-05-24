@@ -1,5 +1,6 @@
 package com.example.coursecatalogservice.exceptionhandler
 
+import com.example.coursecatalogservice.exception.InstructorNotValidException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
@@ -31,7 +32,13 @@ class GlobalErrorHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(errors.joinToString(", ") { it })
     }
+    @ExceptionHandler(InstructorNotValidException::class)
+    fun handleInstructorNotValidExceptions(exception: InstructorNotValidException, request: WebRequest): ResponseEntity<Any> {
+        log.error("Exception observed : {}", exception.message)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(exception.message)
 
+    }
     @ExceptionHandler(Exception::class)
     fun handleAllExceptions(exception: Exception, request: WebRequest): ResponseEntity<Any> {
         log.error("Exception observed : {}", exception.message)
