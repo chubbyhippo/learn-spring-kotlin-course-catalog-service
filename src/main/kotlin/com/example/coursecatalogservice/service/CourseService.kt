@@ -28,14 +28,14 @@ class CourseService(
         }
 
         val courseEntity = courseDto.let {
-            Course(null, it.name, it.category)
+            Course(null, it.name, it.category, instructorOptional.get())
         }
 
         log.info("Course entity is : $courseEntity")
         val save = courseRepository.save(courseEntity)
         log.info("Saved course is : $save")
         save.let {
-            return CourseDto(it.id, it.name, it.category)
+            return CourseDto(it.id, it.name, it.category, it.instructor!!.id)
         }
     }
 
