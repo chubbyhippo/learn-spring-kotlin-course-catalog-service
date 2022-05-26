@@ -4,6 +4,7 @@ import com.example.coursecatalogservice.CourseCatalogServiceApplication
 import com.example.coursecatalogservice.dto.InstructorDto
 import com.example.coursecatalogservice.repository.InstructorRepository
 import com.example.coursecatalogservice.service.InstructorService
+import com.example.coursecatalogservice.util.TestContainersConfig
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -22,7 +23,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 )
 @ActiveProfiles("test")
 @AutoConfigureWebClient
-class InstructorControllerIntegrationTest {
+class InstructorControllerIntegrationTest : TestContainersConfig() {
     @Autowired
     private lateinit var webTestClient: WebTestClient
 
