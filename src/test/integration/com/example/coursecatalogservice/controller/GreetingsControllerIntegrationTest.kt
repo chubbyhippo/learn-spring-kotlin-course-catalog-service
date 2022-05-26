@@ -2,6 +2,7 @@ package com.example.coursecatalogservice.controller
 
 import com.example.coursecatalogservice.CourseCatalogServiceApplication
 import com.example.coursecatalogservice.service.GreetingsService
+import com.example.coursecatalogservice.util.TestContainersConfig
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient
@@ -15,7 +16,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 )
 @ActiveProfiles("test")
 @AutoConfigureWebClient
-class GreetingsControllerIntegrationTest {
+class GreetingsControllerIntegrationTest: TestContainersConfig() {
 
     @Autowired
     private lateinit var webTestClient: WebTestClient
