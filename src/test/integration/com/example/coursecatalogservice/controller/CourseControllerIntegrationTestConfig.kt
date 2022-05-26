@@ -5,6 +5,7 @@ import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.repository.CourseRepository
 import com.example.coursecatalogservice.repository.InstructorRepository
 import com.example.coursecatalogservice.service.CourseService
+import com.example.coursecatalogservice.util.TestContainersConfig
 import com.example.coursecatalogservice.util.courseEntityList
 import com.example.coursecatalogservice.util.instructorEntity
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -24,7 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder
 )
 @ActiveProfiles("test")
 @AutoConfigureWebClient
-class CourseControllerIntegrationTest {
+class CourseControllerIntegrationTestConfig : TestContainersConfig() {
 
     @Autowired
     private lateinit var webTestClient: WebTestClient
