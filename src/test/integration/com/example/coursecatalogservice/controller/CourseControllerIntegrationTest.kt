@@ -25,7 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder
 )
 @ActiveProfiles("test")
 @AutoConfigureWebClient
-class CourseControllerIntegrationTestConfig : TestContainersConfig() {
+class CourseControllerIntegrationTest : TestContainersConfig() {
 
     @Autowired
     private lateinit var webTestClient: WebTestClient
