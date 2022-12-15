@@ -4,7 +4,6 @@ import com.example.coursecatalogservice.dto.InstructorDto
 import com.example.coursecatalogservice.entity.Instructor
 import com.example.coursecatalogservice.repository.InstructorRepository
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class InstructorService(val instructorRepository: InstructorRepository) {
