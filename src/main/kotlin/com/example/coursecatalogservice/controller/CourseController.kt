@@ -2,10 +2,10 @@ package com.example.coursecatalogservice.controller
 
 import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.service.CourseService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
 
 @RestController
 @RequestMapping("/v1/courses")
