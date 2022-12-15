@@ -1,6 +1,7 @@
 package com.example.coursecatalogservice.dto
 
-import javax.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotBlank
+
 
 data class InstructorDto(
     val id: Int?,
